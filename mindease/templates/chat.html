@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat | MindEase{% endblock %}
+{% block page_heading %}AI Support Chat{% endblock %}
+
+{% block content %}
+<section class="glass-card chat-wrapper">
+    <div id="chat-box" class="chat-box">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bubble user-bubble">
+                    <p>{{ message.user_text }}</p>
+                    <span>{{ message.created_at.strftime('%I:%M %p') }}</span>
+                </div>
+                <div class="bubble bot-bubble">
+                    <p>{{ message.bot_reply }}</p>
+                    <span>{{ message.created_at.strftime('%I:%M %p') }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="chat-placeholder">
+                <p>Start the conversation. Share how you are feeling today.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="emergency-box" class="emergency-box hidden">
+        Repeated distress detected. For urgent help, call or text 988 or contact your campus counselor.
+    </div>
+
+    <form id="chat-form" class="chat-form">
+        <input id="chat-input" name="message" type="text" placeholder="Type your message..." required>
+        <button type="submit" class="btn-primary">Send</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.MINDEASE_CHAT_SEND_URL = "{{ url_for('chat.send_message') }}";
+</script>
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

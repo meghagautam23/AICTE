@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}About | MindEase{% endblock %}
+{% block page_heading %}About MindEase{% endblock %}
+
+{% block content %}
+<section class="glass-card info-card">
+    <h3>Project Overview</h3>
+    <p>
+        MindEase is an AI emotional wellness companion designed for students who need structured, accessible, and stigma-free support during academic pressure.
+    </p>
+</section>
+
+<section class="dashboard-columns">
+    <article class="glass-card info-card">
+        <h3>Core Capabilities</h3>
+        <ul>
+            <li>Secure login/signup with personalized account space.</li>
+            <li>Mood tracking with sentiment analysis over journal notes.</li>
+            <li>AI chat companion with per-user chat history.</li>
+            <li>Emergency prompt when repeated negative patterns are detected.</li>
+            <li>Weekly dashboard and motivational quote generator.</li>
+        </ul>
+    </article>
+
+    <article class="glass-card info-card">
+        <h3>Why It Matters</h3>
+        <p>
+            Students often need an always-available first line of emotional support. MindEase helps them observe mood patterns and encourages timely escalation to professional support when needed.
+        </p>
+    </article>
+</section>
+{% endblock %}

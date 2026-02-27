@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}MindEase | Emotional Wellness Companion{% endblock %}
+
+{% block content %}
+<section class="hero glass-card">
+    <div class="hero-copy">
+        <h2>MindEase: AI Emotional Wellness Companion for Students</h2>
+        <p>
+            Track your mood, chat with an empathetic AI companion, and build healthier study-life balance with a secure and student-focused support platform.
+        </p>
+        <div class="hero-actions">
+            <a class="btn-primary" href="{{ url_for('auth.signup') }}">Create Free Account</a>
+            <a class="btn-secondary" href="{{ url_for('auth.login') }}">Login</a>
+        </div>
+    </div>
+    <div class="hero-points">
+        <div class="glass-card mini-card">
+            <h3>Mood Tracking</h3>
+            <p>Capture daily emotions with sentiment-aware journaling.</p>
+        </div>
+        <div class="glass-card mini-card">
+            <h3>AI Chat Support</h3>
+            <p>Receive gentle and practical responses for student stress.</p>
+        </div>
+        <div class="glass-card mini-card">
+            <h3>Weekly Insights</h3>
+            <p>Visual summaries help you identify mood trends over time.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

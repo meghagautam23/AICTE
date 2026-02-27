@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ | MindEase{% endblock %}
+{% block page_heading %}Frequently Asked Questions{% endblock %}
+
+{% block content %}
+<section class="glass-card faq-card">
+    <details>
+        <summary>Is MindEase a replacement for therapy?</summary>
+        <p>No. MindEase is a supportive wellness companion and does not replace professional diagnosis or treatment.</p>
+    </details>
+
+    <details>
+        <summary>How does sentiment analysis work here?</summary>
+        <p>The app uses a VADER sentiment model to score text and classify it as positive, neutral, or negative for lightweight emotional trend tracking.</p>
+    </details>
+
+    <details>
+        <summary>What triggers emergency contact suggestions?</summary>
+        <p>If repeated negative sentiment is detected across recent mood/chat entries, the app recommends immediate support contacts such as 988.</p>
+    </details>
+
+    <details>
+        <summary>Is my data separated from other users?</summary>
+        <p>Yes. Authentication is required and all mood logs and chat history are stored per user in SQLite.</p>
+    </details>
+</section>
+{% endblock %}

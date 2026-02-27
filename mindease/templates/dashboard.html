@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | MindEase{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="dashboard-grid">
+    <article class="glass-card stat-card">
+        <h3>Weekly Mood Entries</h3>
+        <p class="stat-value">{{ weekly_summary.total_entries }}</p>
+    </article>
+    <article class="glass-card stat-card">
+        <h3>Average Sentiment</h3>
+        <p class="stat-value">{{ weekly_summary.weekly_average }}</p>
+    </article>
+    <article class="glass-card stat-card">
+        <h3>Dominant Mood</h3>
+        <p class="stat-value">{{ weekly_summary.dominant_mood }}</p>
+    </article>
+</section>
+
+<section class="dashboard-columns">
+    <article class="glass-card chart-card">
+        <h3>Weekly Mood Summary</h3>
+        <p>Daily average sentiment over the last 7 days.</p>
+
+        <div class="mood-chart">
+            {% for score in weekly_summary.daily_avg_scores %}
+                {% set bar_height = ((score + 1) * 50)|round(0, 'floor')|int %}
+                <div class="chart-col">
+                    <div class="bar" style="height: {{ bar_height }}%;"></div>
+                    <span>{{ weekly_summary.date_labels[loop.index0] }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="glass-card quote-card">
+        <h3>Motivational Quote Generator</h3>
+        <p id="quote-text">{{ initial_quote }}</p>
+        <button id="quote-btn" class="btn-primary" type="button">Generate New Quote</button>
+    </article>
+</section>
+
+<section class="dashboard-columns">
+    <article class="glass-card list-card">
+        <h3>Recent Mood Logs</h3>
+        {% if recent_mood_entries %}
+            <ul>
+                {% for entry in recent_mood_entries %}
+                    <li>
+                        <strong>{{ entry.mood_label }}</strong>
+                        <span>{{ entry.created_at.strftime('%d %b, %I:%M %p') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No mood logs yet. Start with your first entry.</p>
+        {% endif %}
+    </article>
+
+    <article class="glass-card list-card">
+        <h3>Recent Chat History</h3>
+        {% if recent_chat_entries %}
+            <ul>
+                {% for item in recent_chat_entries %}
+                    <li>
+                        <strong>{{ item.user_text[:45] }}{% if item.user_text|length > 45 %}...{% endif %}</strong>
+                        <span>{{ item.created_at.strftime('%d %b, %I:%M %p') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No chat history yet. Start a conversation in Chat.</p>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.MINDEASE_QUOTE_URL = "{{ url_for('main.quote_api') }}";
+</script>
+{% endblock %}

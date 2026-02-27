@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Mood Log | MindEase{% endblock %}
+{% block page_heading %}Mood Tracking{% endblock %}
+
+{% block content %}
+<section class="dashboard-columns">
+    <article class="glass-card mood-form-card">
+        <h3>Log Today's Mood</h3>
+        <form method="POST" class="mood-form">
+            <label for="mood_label">Mood</label>
+            <select id="mood_label" name="mood_label" required>
+                <option value="" disabled selected>Select a mood</option>
+                {% for mood in mood_choices %}
+                    <option value="{{ mood }}">{{ mood }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="notes">Optional Notes</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="What influenced this mood today?"></textarea>
+
+            <button type="submit" class="btn-primary">Save Entry</button>
+        </form>
+    </article>
+
+    <article class="glass-card chart-card">
+        <h3>7-Day Sentiment Trend</h3>
+        <div class="mood-chart">
+            {% for score in weekly_summary.daily_avg_scores %}
+                {% set bar_height = ((score + 1) * 50)|round(0, 'floor')|int %}
+                <div class="chart-col">
+                    <div class="bar" style="height: {{ bar_height }}%;"></div>
+                    <span>{{ weekly_summary.date_labels[loop.index0] }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+
+<section class="glass-card mood-history">
+    <h3>Recent Mood Entries</h3>
+    {% if mood_entries %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Mood</th>
+                        <th>Sentiment</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in mood_entries %}
+                        <tr>
+                            <td>{{ entry.created_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+                            <td>{{ entry.mood_label }}</td>
+                            <td><span class="sentiment-pill {{ entry.sentiment_label }}">{{ entry.sentiment_label }}</span></td>
+                            <td>{{ entry.notes if entry.notes else '-' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No mood entries available.</p>
+    {% endif %}
+</section>
+{% endblock %}
