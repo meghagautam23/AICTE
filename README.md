@@ -137,13 +137,3 @@ Optional:
 6. Stronger crisis detection with multi-signal risk scoring
 7. Unit/integration test suite with CI pipeline
 
-## Internship Submission Notes
-This project demonstrates:
-- Clean modular backend design
-- Meaningful use of AI/sentiment processing in a healthcare-adjacent domain
-- User-centric responsive frontend redesign
-- Documentation quality expected in internship and portfolio submissions
-
-## Disclaimer
-MindEase is an educational and supportive tool, not a substitute for licensed mental healthcare.
-If immediate help is needed in the US, call or text **988**.
