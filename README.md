@@ -118,7 +118,13 @@ Mental_Health_Chatbot-main/
    python app.py
    ```
 4. Open in browser:
-   - `http://127.0.0.1:5000/`
+   - `http://127.0.0.1:5050/`
+
+Optional:
+- Set a custom port with `PORT`, for example:
+  ```bash
+  PORT=8000 python app.py
+  ```
 
 `mindease.db` is created automatically on first run.
 
