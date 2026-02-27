@@ -23,7 +23,10 @@ class User(UserMixin, db.Model):
     )
 
     def set_password(self, raw_password):
-        self.password_hash = generate_password_hash(raw_password)
+        # Use PBKDF2 for compatibility with Python builds that do not expose hashlib.scrypt.
+        self.password_hash = generate_password_hash(
+            raw_password, method="pbkdf2:sha256", salt_length=16
+        )
 
     def check_password(self, raw_password):
         return check_password_hash(self.password_hash, raw_password)
