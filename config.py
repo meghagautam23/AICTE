@@ -13,6 +13,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     NEGATIVE_STREAK_THRESHOLD = 3
     WEEKLY_WINDOW_DAYS = 7
+    APP_TIMEZONE = os.getenv("APP_TIMEZONE", "Asia/Kolkata")
     MOOD_CHOICES = [
         "Very Happy",
         "Happy",

@@ -9,6 +9,7 @@ from mindease.services import (
     detect_repeated_negative_sentiment,
     generate_chat_reply,
 )
+from mindease.time_utils import format_local
 
 
 chat_bp = Blueprint("chat", __name__, url_prefix="/chat")
@@ -69,7 +70,7 @@ def send_message():
                 "sentiment_label": sentiment_label,
                 "sentiment_score": sentiment_score,
                 "emergency_prompt": should_suggest_emergency,
-                "created_at": chat_record.created_at.strftime("%I:%M %p"),
+                "created_at": format_local(chat_record.created_at, "%I:%M %p"),
             }
         )
 

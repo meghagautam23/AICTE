@@ -53,7 +53,7 @@
                 <tbody>
                     {% for entry in mood_entries %}
                         <tr>
-                            <td>{{ entry.created_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+                            <td>{{ format_local_time(entry.created_at, '%d %b %Y, %I:%M %p') }}</td>
                             <td>{{ entry.mood_label }}</td>
                             <td><span class="sentiment-pill {{ entry.sentiment_label }}">{{ entry.sentiment_label }}</span></td>
                             <td>{{ entry.notes if entry.notes else '-' }}</td>

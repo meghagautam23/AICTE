@@ -1,10 +1,9 @@
-from datetime import datetime
-
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
+from mindease.time_utils import format_local, local_now
 
 
 db = SQLAlchemy()
@@ -43,7 +42,10 @@ def create_app(config_class=Config):
 
     @app.context_processor
     def inject_globals():
-        return {"current_year": datetime.utcnow().year}
+        return {
+            "current_year": local_now().year,
+            "format_local_time": format_local,
+        }
 
     with app.app_context():
         db.create_all()

@@ -1,10 +1,11 @@
 import random
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from mindease.models import ChatMessage, MoodEntry
+from mindease.time_utils import get_app_timezone, local_now, to_local
 
 
 sentiment_analyzer = SentimentIntensityAnalyzer()
@@ -143,13 +144,17 @@ def detect_repeated_negative_sentiment(user_id, threshold):
 
 
 def build_weekly_mood_summary(user_id, days=7):
-    today = datetime.utcnow().date()
+    today = local_now().date()
     start_date = today - timedelta(days=days - 1)
+
+    timezone_info = get_app_timezone()
+    start_local = datetime.combine(start_date, datetime.min.time(), tzinfo=timezone_info)
+    start_utc_naive = start_local.astimezone(timezone.utc).replace(tzinfo=None)
 
     weekly_entries = (
         MoodEntry.query.filter(
             MoodEntry.user_id == user_id,
-            MoodEntry.created_at >= datetime.combine(start_date, datetime.min.time()),
+            MoodEntry.created_at >= start_utc_naive,
         )
         .order_by(MoodEntry.created_at.asc())
         .all()
@@ -165,7 +170,7 @@ def build_weekly_mood_summary(user_id, days=7):
         date_labels.append(current_day.strftime("%a"))
 
     for entry in weekly_entries:
-        day_key = entry.created_at.date()
+        day_key = to_local(entry.created_at).date()
         daily_score_buckets[day_key].append(entry.sentiment_score)
         mood_distribution[entry.mood_label] += 1
 
